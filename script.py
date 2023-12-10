@@ -7,11 +7,11 @@ results = []
 
 start = time.time()
 #Main loop with hardcoded range to address pagination
-for i in range(1,2):
+for i in range(1,13):
     url = f'https://gopher1.extrkt.com/?paged={i}'
     resp = httpx.get(url=url, headers=headers)
     html = HTMLParser(resp.text)
-    
+
     products = html.css('li.product')
     #Second loop to get more info about each found product
     for product in products:
