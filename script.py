@@ -92,5 +92,4 @@ duration = end - start
 print(f"Scraping Duration: {duration}")
 resultsDf.to_excel(f'Results.xlsx',index=False )
 
-# resultsDf.to_excel(Exception ,f'ScrapingOutput_{timestamp}.xlsx' ) encoding='utf-8', index=False)
 
