@@ -1,4 +1,4 @@
-import httpx, time, random, pandas as pd
+import httpx, time, random, openpyxl,pandas as pd
 from datetime import datetime
 from selectolax.parser import HTMLParser
 
@@ -17,15 +17,15 @@ for i in range(1,13):
     for product in products:
         tags = []
         item = {
-                "productId" : product.css_first('a.button').attributes.get('data-product_id'),
-                "productSKU" : product.css_first('a.button').attributes.get('data-product_sku'),
-                "product_url" : product.css_first('a').attributes.get('href'),
-                "name" : product.css_first('h2').text(),
-                "price" : product.css_first('bdi').text(),
-                "image" : product.css_first('img').attributes.get('src')
+                "Product ID" : product.css_first('a.button').attributes.get('data-product_id'),
+                "Product SKU" : product.css_first('a.button').attributes.get('data-product_sku'),
+                "Product URL" : product.css_first('a').attributes.get('href'),
+                "Name" : product.css_first('h2').text(),
+                "Price" : product.css_first('bdi').text(),
+                "Image" : product.css_first('img').attributes.get('src')
                 }
         #Navigate to product website to extract additional information
-        productResp = httpx.get(url=item['product_url'], headers=headers)
+        productResp = httpx.get(url=item['Product URL'], headers=headers)
         productHtml = HTMLParser(productResp.text)
 
         cat = productHtml.css_first('span.posted_in')
@@ -90,5 +90,7 @@ resultsDf = pd.DataFrame(results)
 end = time.time()
 duration = end - start
 print(f"Scraping Duration: {duration}")
-timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-resultsDf.to_csv(f'ScrapingOutput_{timestamp}.csv', sep='\t', encoding='utf-8', index=False)
+resultsDf.to_excel(f'Results.xlsx',index=False )
+
+# resultsDf.to_excel(Exception ,f'ScrapingOutput_{timestamp}.xlsx' ) encoding='utf-8', index=False)
+
